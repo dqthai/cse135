@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <display-name>Data Entry Web App</display-name>
+  <description>
+		This application demonstrates how SQL queries are executed
+		within JSP pages
+	</description>
+  
+  <welcome-file-list>
+    <welcome-file>
+		Index.jsp		
+	</welcome-file>
+  </welcome-file-list>
+  	<servlet>
+		<servlet-name>Product</servlet-name>
+		<jsp-file>/Product.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Product</servlet-name>
+		<url-pattern>/product</url-pattern>
+	</servlet-mapping>
+</web-app>
