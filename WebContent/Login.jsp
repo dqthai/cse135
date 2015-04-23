@@ -4,9 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Login</title>
 </head>
 <body>
-
+	<h1>Login</h1>
+	<table>
+		<tr>
+			<td>Name:</td>
+			<td><input name="name" value="" size="10"></td>
+			<td><button type="submit">Login</button>
+		</tr>
+	</table>
 </body>
 </html>
