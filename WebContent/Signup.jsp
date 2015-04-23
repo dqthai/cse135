@@ -29,6 +29,7 @@
 					<select name="state">
 						<option value="CA">CA</option>
 						<option value="NV">NV</option>
+						<option value="WA">WA</option>
 					</select>
 				</td>
 			</tr>
