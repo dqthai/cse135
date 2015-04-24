@@ -8,7 +8,7 @@
 			<li><a href="Signup.jsp">Sign up</a></li>
 			<li><a href="Browse.jsp">Browse</a></li>
 			<li><a href="Product.jsp">Products</a></li>
-			<li><a href="Category.jsp">Categories</a></li>
+			<li><a href="Categories.jsp">Categories</a></li>
 			<li><a href="Order.jsp">Cart</a></li>
 		</ul>
 	</div>
