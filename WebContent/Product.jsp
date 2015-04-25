@@ -19,7 +19,8 @@
 			pstmt.setString(2, request.getParameter("sku"));
 			pstmt.setInt(3,
 					Integer.parseInt(request.getParameter("price")));
-			pstmt.setString(4, request.getParameter("category"));
+			pstmt.setInt(4,
+					Integer.parseInt(request.getParameter("category")));
 			System.out.println("name: " + request.getParameter("name")
 					+ " sku: " + request.getParameter("sku")
 					+ " price: " + request.getParameter("price")
@@ -35,7 +36,8 @@
 			pstmt.setString(2, request.getParameter("sku"));
 			pstmt.setInt(3,
 					Integer.parseInt(request.getParameter("price")));
-			pstmt.setString(4, request.getParameter("category"));
+			pstmt.setInt(4,
+					Integer.parseInt(request.getParameter("category")));
 			pstmt.setInt(5,
 					Integer.parseInt(request.getParameter("id")));
 			System.out.println("name: " + request.getParameter("name")
@@ -62,12 +64,12 @@
 	<div id="categories">
 		<h2>Categories</h2>
 		<ul>
-			<li><a href="product?category=allproducts">All Products</a></li>
+			<li><a href="Product.jsp?categories=allproducts">All Products</a></li>
 			<%
 				while (rs.next()) {
 						String category = rs.getString("name");
 			%>
-			<li><a href="product?category=<%=category%>"><%=category%></a></li>
+			<li><a href="Product.jsp?categories=<%=category%>"><%=category%></a></li>
 			<%
 				}
 			%>
@@ -78,6 +80,12 @@
 	%>
 	<div id="product_table">
 		<h2>Product Table</h2>
+		<div id="search">
+			<form action="Product.jsp" method="post">
+				<input type="text" name="search" value="" /> <input type="submit"
+					value="Search" />
+			</form>
+		</div>
 		<table>
 			<tr>
 				<th>ID</th>
@@ -87,7 +95,7 @@
 				<th>Category</th>
 			</tr>
 			<tr>
-				<form action="product" method="POST">
+				<form action="Product.jsp" method="POST">
 					<input type="hidden" name="action" value="insert" />
 					<th>&nbsp;</th>
 					<th><input type="text" value="" name="p_name" id="p_name"
@@ -98,8 +106,9 @@
 							<%
 								while (rs.next()) {
 										String category = rs.getString("name");
+										int id = rs.getInt("id");
 							%>
-							<option><%=category%></option>
+							<option value="<%=id%>"><%=category%></option>
 							<%
 								}
 									rs.close();
@@ -110,16 +119,46 @@
 			</tr>
 			<%
 				List<String> categories = new ArrayList<String>();
+					List<Integer> ids = new ArrayList<Integer>();
 					rs = statement.executeQuery("SELECT * FROM Category");
 					while (rs.next()) {
 						categories.add(rs.getString("name"));
+						ids.add(rs.getInt("id"));
 					}
 					rs.close();
-					rs = statement.executeQuery("SELECT * FROM Products");
+
+					String cat = request.getParameter("categories");
+					String search = request.getParameter("search");
+					System.out.println("cat: " + cat + " search: " + search);
+					if (cat != null || search != null) {
+
+						if (cat == null && search != null) {
+							rs = statement
+									.executeQuery("SELECT * FROM Products, Category WHERE p_name LIKE '%"
+											+ search
+											+ "%' AND Category.id=Products.category GROUP BY Category.id, Products.id");
+						} else if (cat.equals("allproducts") && search != null) {
+							rs = statement
+									.executeQuery("SELECT * FROM products WHERE p_name LIKE '%"
+											+ search
+											+ "%' AND Products.category=Category.id GROUP BY Category.id, Products.id");
+						} else if (cat.equals("allproducts") && search == null) {
+							rs = statement
+									.executeQuery("SELECT * FROM Products, Category WHERE Products.category=Category.id GROUP BY Category.id, Products.id");
+						} else {
+							rs = statement
+									.executeQuery("SELECT * FROM Products, Category WHERE name='"
+											+ cat
+											+ "' AND Products.category=Category.id GROUP BY Category.id, Products.id");
+						}
+					} else {
+						rs = statement
+								.executeQuery("SELECT * FROM Products, Category WHERE Products.category=Category.id");
+					}
 					while (rs.next()) {
 			%>
 			<tr>
-				<form action="product" method="POST">
+				<form action="Product.jsp" method="POST">
 					<input type="hidden" name="action" value="update" /> <input
 						type="hidden" name="id" value="<%=rs.getInt("id")%>" />
 					<td><%=rs.getInt("id")%></td>
@@ -133,8 +172,9 @@
 							<%
 								for (int i = 0; i < categories.size(); i++) {
 											String category = categories.get(i);
+											int id = ids.get(i);
 							%>
-							<option <%if (category.equals(rs.getString("category"))) {%>
+							<option value="<%=id%>" <%if (id == rs.getInt("category")) {%>
 								selected <%}%>>
 								<%=category%>
 							</option>
@@ -144,7 +184,7 @@
 					</select></td>
 					<td><input type="submit" value="Update"></td>
 				</form>
-				<form action="product" method="POST">
+				<form action="Product.jsp" method="POST">
 					<input type="hidden" name="action" value="delete" /> <input
 						type="hidden" value="<%=rs.getInt("id")%>" name="id" />
 					<td><input type="submit" value="Delete" /></td>
