@@ -4,6 +4,8 @@
 	Connection conn = null;
 	PreparedStatement pstmt = null;
     ResultSet rs = null;
+    String errortext = "";
+    ResultSet re = null;
     try {
         // Registering Postgresql JDBC driver with the DriverManager
     	Class.forName("org.postgresql.Driver");
@@ -12,8 +14,11 @@
                     "jdbc:postgresql://localhost/cse135?" +
                     "user=postgres&password=postgres");
 %>
-<%-- -------- Retrieval code (already initialized students and nextPID) -------- --%>
+<%-- -------- Retrieval code -------- --%>
 <% String action = request.getParameter("action"); %>
+
+
+
 <%-- -------- INSERT Code -------- --%>
 <%       
     // Check if an insertion is requested
@@ -22,9 +27,17 @@
         
         // Create the prepared statement and use it to
         // INSERT categories INTO the students table.
-
-		if(request.getParameter("name").equals("")){
+		pstmt = conn.prepareStatement("SELECT 1 FROM categories " + 
+					"WHERE name = ?");
+		pstmt.setString(1, request.getParameter("name"));
+		re = pstmt.executeQuery();
+		if(request.getParameter("name") == null || request.getParameter("name").isEmpty()){
 			//print an error
+			errortext = "INSERT FAILED: NAME FIELD EMPTY";
+		}
+		else if(re.next()){
+			
+			errortext = "INSERT FAILED: NAME ALREADY EXISTS";
 		}
 		else{
 			conn.setAutoCommit(false);
@@ -44,7 +57,19 @@
 <%
 	// Check if an update is requested
 	if (action != null && action.equals("update")) {
-
+		
+	pstmt = conn.prepareStatement("SELECT 1 FROM categories " + 
+				"WHERE name = ?");
+	pstmt.setString(1, request.getParameter("name"));
+	re = pstmt.executeQuery();
+		if(request.getParameter("name") == null || request.getParameter("name").isEmpty()){
+			//print an error
+			errortext = "UPDATE FAILED: NAME FIELD EMPTY";
+		}
+		else if(re.next()){
+		errortext = "UPDATE FAILED: NAME ALREADY EXISTS";
+		}
+		else{
         // Begin transaction
 		conn.setAutoCommit(false);
 		// Create the prepared statement and use it to
@@ -59,6 +84,7 @@
         // Commit transaction
         conn.commit();
         conn.setAutoCommit(true);
+		}
 	}
 %>
 
@@ -88,7 +114,9 @@
     rs = statement.executeQuery("SELECT * FROM categories");
 %>
 
+
 <html>
+
 <body>
 <table>
 	<tr>
@@ -97,6 +125,10 @@
 			<%@include file="Header.jsp"%>
 		</td>
 		<td>
+			<tr>
+				<th>Categories</th>
+				<th><font color="red"><%=errortext%></font></th>
+			</tr>
 			<!-- Add an HTML table header row to format the results -->
 			<table border="1">
 			<tr>
@@ -144,7 +176,7 @@
                     <input type="hidden" name="action" value="delete"/>
                     <input type="hidden" value="<%=rs.getInt("id")%>" name="id"/>
                     <%-- Button --%>
-                <td><input type="submit" value="Delete"/></td>
+                	<td><input type="submit" value="Delete"/></td>
                 </form>
                 <% } %>
                 
