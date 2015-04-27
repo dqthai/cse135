@@ -11,6 +11,9 @@
 	if (session.getAttribute("quantities") != null)
 		quantities = (ArrayList<Integer>) session
 				.getAttribute("quantities");
+	List<Integer> prices = new ArrayList<Integer>();
+	if (session.getAttribute("prices") != null)
+		prices = (ArrayList<Integer>) session.getAttribute("prices");
 
 	try {
 		Class.forName("org.postgresql.Driver");
@@ -36,7 +39,8 @@
 		<h2>Add to orders</h2>
 		<form action="Browse.jsp" method="POST">
 			<label>Add Item: <%=p_name%></label><br> <label>Price: <%=price%></label><br>
-			<input type="hidden" value="<%=p_name%>" name="p_name" /> <label>Quantity</label><input
+			<input type="hidden" value="<%=p_name%>" name="p_name" /> <input
+				type="hidden" value="<%=price%>" name="price" /> <label>Quantity</label><input
 				type="number" value="" name="quantity" /><br> <input
 				type="hidden" name="action" value="add" /> <input type="submit"
 				value="Add to cart" />
@@ -48,6 +52,7 @@
 		<table border="1" width="50%">
 			<tr>
 				<th>Name</th>
+				<th>Price</th>
 				<th>Quantity</th>
 			</tr>
 			<%
@@ -55,9 +60,11 @@
 						for (int i = 0; i < products.size(); i++) {
 							String product = products.get(i);
 							int quantity = quantities.get(i);
+							int cost = prices.get(i);
 			%>
 			<tr>
 				<td><%=product%></td>
+				<td><%= cost%></td>
 				<td><%=quantity%></td>
 			</tr>
 			<%

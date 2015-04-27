@@ -22,12 +22,17 @@
 			if (session.getAttribute("quantities") != null)
 				quantities = (ArrayList<Integer>) session
 						.getAttribute("quantities");
+			List<Integer> prices = new ArrayList<Integer>();
+			if (session.getAttribute("prices") != null)
+				prices = (ArrayList<Integer>) session.getAttribute("prices");
 
 			products.add(request.getParameter("p_name"));
 			quantities.add(Integer.parseInt(request
 					.getParameter("quantity")));
+			prices.add(Integer.parseInt(request.getParameter("price")));
 			session.setAttribute("products", products);
 			session.setAttribute("quantities", quantities);
+			session.setAttribute("prices", prices);
 		}
 		
 		rs = statement.executeQuery("SELECT name FROM category");
