@@ -23,7 +23,7 @@
 		String p_name = request.getParameter("products_order");
 		int price = 0;
 		rs = statement
-				.executeQuery("Select * from products where p_name='"
+				.executeQuery("Select * from products where prod_name='"
 						+ p_name + "'");
 		if (rs.next())
 			price = rs.getInt("price");
