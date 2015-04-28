@@ -35,7 +35,18 @@
     if (action != null && action.equals("signup"))
     {
     	conn.setAutoCommit(false);
-    	pstmt = conn.prepareStatement("");
+    	pstmt = conn.prepareStatement(
+    			"INSERT INTO users (u_name, u_role, u_age, u_state)" +
+    	                           "VALUES (?, ?, ?, ?)");
+    	pstmt.setString(1, request.getParameter("name"));
+    	pstmt.setString(2, request.getParameter("role"));
+    	pstmt.setInt   (3, Integer.parseInt(request.getParameter("age")));
+    	pstmt.setString(4, request.getParameter("state"));
+    	
+    	int rowcount = pstmt.executeUpdate();
+    	conn.commit();
+    	conn.setAutoCommit(true);
+
     }
     %>
 
@@ -49,8 +60,8 @@
 			</tr>
 			<tr>
 				<td>Role:</td>
-				<td><input type="radio" name="role" value="Owner">Owner
-				<input type="radio" name="role" value="Customer">Customer</td>
+				<td><input type="radio" name="role" value="O">Owner
+				<input type="radio" name="role" value="C">Customer</td>
 			</tr>
 			<tr>
 				<td>Age:</td>
