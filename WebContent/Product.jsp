@@ -3,7 +3,7 @@
 	import="java.util.ArrayList"%>
 <%@include file="Header.jsp"%>
 <%
-	if (session.getAttribute("role") != null && session.getAttribute("role").equals("owner")) {
+	if (session.getAttribute("u_role") != null && session.getAttribute("u_role").equals("owner")) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
