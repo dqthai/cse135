@@ -53,7 +53,7 @@
 	<h1>Signup</h1>
 	<form action="Signup.jsp" method="post">
 		<table>
-			<input type="hidden" name="action" value="signup">
+			<input type="hidden" name="action" value="signup" />
 			<tr>
 				<td>Name:</td>
 				<td><input name="name" value="" size="10"></td>
@@ -90,6 +90,30 @@
     }
     catch (SQLException e) {
     	// TODO: Signup Failure
+    	System.out.println("SQLException caught");
+    }
+    finally {
+	    if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+			}
+			rs = null;
+		}
+		if (pstmt != null) {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+			} // Ignore
+			pstmt = null;
+		}
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+			} // Ignore
+			conn = null;
+		}
     }
     %>
 
