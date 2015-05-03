@@ -1,5 +1,6 @@
 
 <%@ page import="java.util.*,java.sql.*" %>
+<%@ include file="Home.jsp" %>
 <% 
 	Connection conn = null;
 	ResultSet rs = null;

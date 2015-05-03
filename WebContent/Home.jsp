@@ -9,7 +9,6 @@
 <title>Home</title>
 </head>
 <body>
-	<h1>Home</h1>
 	<!-- TODO: Show certain links based on role -->
 	<%
 	String u_name = null;

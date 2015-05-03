@@ -1,7 +1,7 @@
 
 <%@ page import="java.sql.*" import="java.util.List"
 	import="java.util.ArrayList"%>
-<%@include file="Header.jsp"%>
+<%@include file="Home.jsp"%>
 <%
 	if (session.getAttribute("u_role") != null && session.getAttribute("u_role").equals("owner")) {
 		Connection conn = null;
@@ -78,7 +78,7 @@
 			}
 
 			Statement statement = conn.createStatement();
-			rs = statement.executeQuery("SELECT name FROM Category");
+			rs = statement.executeQuery("SELECT name FROM Categories");
 %>
 
 <div>
@@ -99,7 +99,7 @@
 		</ul>
 	</div>
 	<%
-		rs = statement.executeQuery("SELECT * FROM Category");
+		rs = statement.executeQuery("SELECT * FROM Categories");
 				String cate = request.getParameter("categories");
 				String srch = request.getParameter("search");
 				cate = (cate == null) ? "allproducts" : cate.trim();
@@ -150,7 +150,7 @@
 			<%
 				List<String> categories = new ArrayList<String>();
 						List<Integer> ids = new ArrayList<Integer>();
-						rs = statement.executeQuery("SELECT * FROM Category");
+						rs = statement.executeQuery("SELECT * FROM Categories");
 						while (rs.next()) {
 							categories.add(rs.getString("name"));
 							ids.add(rs.getInt("id"));
@@ -167,36 +167,36 @@
 
 							if (cat == null && !search.equals("")) {
 								rs = statement
-										.executeQuery("SELECT * FROM Products, Category WHERE Upper(p_name) LIKE upper('%"
+										.executeQuery("SELECT * FROM Products, Categories WHERE Upper(p_name) LIKE upper('%"
 												+ search
-												+ "%') AND Category.id=Products.category GROUP BY Category.id, Products.id");
+												+ "%') AND Categories.id=Products.category GROUP BY Categories.id, Products.id");
 							} else if (cat.equals("allproducts")
 									&& !search.equals("")) {
 								rs = statement
-										.executeQuery("SELECT * FROM products, Category WHERE upper(p_name) LIKE upper('%"
+										.executeQuery("SELECT * FROM products, Categories WHERE upper(p_name) LIKE upper('%"
 												+ search
-												+ "%') AND Products.category=Category.id GROUP BY Category.id, Products.id");
+												+ "%') AND Products.category=Categories.id GROUP BY Categories.id, Products.id");
 							} else if (cat.equals("allproducts")
 									&& search.equals("")) {
 								rs = statement
-										.executeQuery("SELECT * FROM Products, Category WHERE Products.category=Category.id GROUP BY Category.id, Products.id");
+										.executeQuery("SELECT * FROM Products, Categories WHERE Products.category=Categories.id GROUP BY Categories.id, Products.id");
 							} else if (cat != null && search.equals("")) {
 								rs = statement
-										.executeQuery("SELECT * FROM Products, Category WHERE name='"
+										.executeQuery("SELECT * FROM Products, Categories WHERE name='"
 												+ cat
-												+ "' AND Products.category=Category.id"
-												+ " GROUP BY Category.id, Products.id");
+												+ "' AND Products.category=Categories.id"
+												+ " GROUP BY Categories.id, Products.id");
 							} else {
 								rs = statement
-										.executeQuery("SELECT * FROM Products, Category WHERE name='"
+										.executeQuery("SELECT * FROM Products, Categories WHERE name='"
 												+ cat
-												+ "' AND Products.category=Category.id AND upper(p_name) LIKE upper('%"
+												+ "' AND Products.category=Categories.id AND upper(p_name) LIKE upper('%"
 												+ search
-												+ "%') GROUP BY Category.id, Products.id");
+												+ "%') GROUP BY Categories.id, Products.id");
 							}
 						} else {
 							rs = statement
-									.executeQuery("SELECT * FROM Products, Category WHERE Products.category=Category.id");
+									.executeQuery("SELECT * FROM Products, Categories WHERE Products.category=Categories.id");
 						}
 						while (rs.next()) {
 			%>

@@ -1,4 +1,8 @@
 <%@page import="java.util.*, java.sql.*"%>
+
+<%-- -------- Include menu HTML code -------- --%> 
+<%@include file="Home.jsp"%>
+
 <%-- Prepare Connection Code --%>
 <%
 	Connection conn = null;
@@ -121,8 +125,6 @@
 <table>
 	<tr>
 		<td valign="top">
-			<%-- -------- Include menu HTML code -------- --%> 
-			<%@include file="Header.jsp"%>
 		</td>
 		<td>
 			<tr>

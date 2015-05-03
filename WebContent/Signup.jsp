@@ -15,6 +15,7 @@
     Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
+    String redirect = null;
     
     try {
     	 
@@ -46,6 +47,10 @@
     	int rowcount = pstmt.executeUpdate();
     	conn.commit();
     	conn.setAutoCommit(true);
+    	
+    	// Redirect to signup success page
+    	redirect = "SignUpSuccess.html";
+    	response.sendRedirect(redirect);
 
     }
     %>
@@ -72,6 +77,7 @@
 				<td>State:</td>
 				<td>
 					<select name="state">
+					<!-- TODO: Add all states -->
 						<option value="CA">CA</option>
 						<option value="NV">NV</option>
 						<option value="WA">WA</option>
@@ -91,6 +97,8 @@
     catch (SQLException e) {
     	// TODO: Signup Failure
     	System.out.println("SQLException caught");
+    	redirect = "SignupFailure.html";
+    	response.sendRedirect(redirect);
     }
     finally {
 	    if (rs != null) {

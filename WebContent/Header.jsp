@@ -3,7 +3,7 @@
 	<div class="navbar-inner">
 		<a class="brand" href="#">Hello</a>
 		<ul class="nav">
-			<li><a href="Index.jsp">Home</a></li>
+			<li><a href="Home.jsp">Home</a></li>
 			<li><a href="Login.jsp">Login</a></li>
 			<li><a href="Signup.jsp">Sign up</a></li>
 			<li><a href="Browse.jsp">Browse</a></li>

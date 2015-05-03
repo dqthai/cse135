@@ -1,6 +1,6 @@
 <%@page import="java.sql.*" import="java.util.List"
 	import="java.util.ArrayList"%>
-<%@ include file="Header.jsp"%>
+<%@ include file="Home.jsp"%>
 <%
 	Connection conn = null;
 	ResultSet rs = null;
@@ -35,7 +35,7 @@
 			session.setAttribute("prices", prices);
 		}
 		
-		rs = statement.executeQuery("SELECT name FROM category");
+		rs = statement.executeQuery("SELECT name FROM categories");
 %>
 <div>
 	<h1>Products Browsing</h1>
@@ -85,7 +85,7 @@
 			<%
 				List<String> categories = new ArrayList<String>();
 				List<Integer> ids = new ArrayList<Integer>();
-				rs = statement.executeQuery("SELECT * FROM Category");
+				rs = statement.executeQuery("SELECT * FROM Categories");
 				while(rs.next()){
 					categories.add(rs.getString("name"));
 					ids.add(rs.getInt("id"));
@@ -96,36 +96,36 @@
 
 					if (cat == null && !srch.equals("")) {
 						rs = statement
-								.executeQuery("SELECT * FROM Products, Category WHERE Upper(p_name) LIKE upper('%"
+								.executeQuery("SELECT * FROM Products, Categories WHERE Upper(p_name) LIKE upper('%"
 										+ srch
-										+ "%') AND Category.id=Products.category GROUP BY Category.id, Products.id");
+										+ "%') AND Category.id=Products.categories GROUP BY Categories.id, Products.id");
 					} else if (cat.equals("allproducts")
 							&& !srch.equals("")) {
 						rs = statement
-								.executeQuery("SELECT * FROM products, Category WHERE upper(p_name) LIKE upper('%"
+								.executeQuery("SELECT * FROM products, Categories WHERE upper(p_name) LIKE upper('%"
 										+ srch
-										+ "%') AND Products.category=Category.id GROUP BY Category.id, Products.id");
+										+ "%') AND Products.category=Categories.id GROUP BY Categories.id, Products.id");
 					} else if (cat.equals("allproducts")
 							&& srch.equals("")) {
 						rs = statement
-								.executeQuery("SELECT * FROM Products, Category WHERE Products.category=Category.id GROUP BY Category.id, Products.id");
+								.executeQuery("SELECT * FROM Products, Categories WHERE Products.category=Categories.id GROUP BY Categories.id, Products.id");
 					} else if (cat != null && srch.equals("")) {
 						rs = statement
-								.executeQuery("SELECT * FROM Products, Category WHERE name='"
+								.executeQuery("SELECT * FROM Products, Categories WHERE name='"
 										+ cat
-										+ "' AND Products.category=Category.id"
-										+ " GROUP BY Category.id, Products.id");
+										+ "' AND Products.category=Categories.id"
+										+ " GROUP BY Categories.id, Products.id");
 					} else {
 						rs = statement
-								.executeQuery("SELECT * FROM Products, Category WHERE name='"
+								.executeQuery("SELECT * FROM Products, Categories WHERE name='"
 										+ cat
-										+ "' AND Products.category=Category.id AND upper(p_name) LIKE upper('%"
+										+ "' AND Products.category=Categories.id AND upper(p_name) LIKE upper('%"
 										+ srch
-										+ "%') GROUP BY Category.id, Products.id");
+										+ "%') GROUP BY Categories.id, Products.id");
 					}
 				} else {
 					rs = statement
-							.executeQuery("SELECT * FROM Products, Category WHERE Products.category=Category.id");
+							.executeQuery("SELECT * FROM Products, Categories WHERE Products.category=Categories.id");
 				}
 				while(rs.next()){
 					String product_name = rs.getString("p_name");
