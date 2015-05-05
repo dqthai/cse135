@@ -1,12 +1,9 @@
-
-<%@include file="Header.jsp" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head> 
-<body>
-Hello World!
-</body>
-</html>
+<div class="navbar">
+	<div class="navbar-inner">
+		<ul class="nav">
+			<li><a href="Home.jsp">Home</a></li>
+			<li><a href="Login.jsp">Login</a></li>
+			<li><a href="Signup.jsp">Sign up</a></li>
+		</ul>
+	</div>
+</div>
