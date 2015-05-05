@@ -9,14 +9,14 @@
 		products = (ArrayList<String>) session.getAttribute("products");
 	List<Integer> quantities = new ArrayList<Integer>();
 	if (session.getAttribute("quantities") != null)
-		quantities = (ArrayList<Integer>) session
-				.getAttribute("quantities");
-	List<Integer> prices = new ArrayList<Integer>();
+		quantities = (ArrayList<Integer>) session.getAttribute("quantities");
+	List<Double> prices = new ArrayList<Double>();
 	if (session.getAttribute("prices") != null)
-		prices = (ArrayList<Integer>) session.getAttribute("prices");
+		prices = (ArrayList<Double>) session.getAttribute("prices");
 	List<Integer> p_ids = new ArrayList<Integer>();
 	if (session.getAttribute("p_ids") != null)
-		prices = (ArrayList<Integer>) session.getAttribute("p_ids");
+		p_ids = (ArrayList<Integer>) session.getAttribute("p_ids");
+	
 	try {
 		Class.forName("org.postgresql.Driver");
 		conn = DriverManager
@@ -26,13 +26,11 @@
 		Statement statement = conn.createStatement();
 
 		String p_name = request.getParameter("products_order");
-		int price = 0;
+		double price = 0.0;
 		int p_id = -1;
-		rs = statement
-				.executeQuery("Select * from products where p_name='"
-						+ p_name + "'");
-		if (rs.next()){
-			price = rs.getInt("price");
+		rs = statement.executeQuery("Select * from products where p_name='" + p_name + "'");
+		if (rs.next()) {
+			price = rs.getDouble("price");
 			p_id = rs.getInt("id");
 		}
 		rs.close();
@@ -43,12 +41,15 @@
 	<div>
 		<h2>Add to orders</h2>
 		<form action="Browse.jsp" method="POST">
-			<label>Add Item: <%=p_id%>: <%=p_name%></label><br> <label>Price:
-				<%=price%></label><br> <input type="hidden" value="<%=p_id%>"
-				name="p_id" /> <input type="hidden" value="<%=price%>" name="price" />
-			<label>Quantity</label><input type="number" value="" name="quantity" /><br>
-			<input type="hidden" name="action" value="add" /> <input
-				type="submit" value="Add to cart" />
+			<label>Add Item: <%=p_id%>: <%=p_name%></label><br> 
+			<label>Price: <%=price%></label><br> 
+			<input type="hidden" value="<%=p_id%>" name="p_id" /> 
+			<input type="hidden" value="<%=price%>" name="price" />
+			<input type="hidden" value="<%=p_name%>" name="p_name" /> 
+			<label>Quantity</label>
+			<input type="number" value="" name="quantity" /><br> 
+			<input type="hidden" name="action" value="add" /> 
+			<input type="submit" value="Add to cart" />
 		</form>
 	</div>
 
@@ -61,11 +62,12 @@
 				<th>Quantity</th>
 			</tr>
 			<%
+				System.out.println(prices);
 				if (products != null) {
 						for (int i = 0; i < products.size(); i++) {
 							String product = products.get(i);
 							int quantity = quantities.get(i);
-							int cost = prices.get(i);
+							double cost = prices.get(i);
 			%>
 			<tr>
 				<td><%=product%></td>
