@@ -5,6 +5,8 @@
 
 <%-- Prepare Connection Code --%>
 <%
+if(session.getAttribute("u_role") != null && session.getAttribute("u_role").equals("owner"))
+{
 	Connection conn = null;
 	PreparedStatement pstmt = null;
     ResultSet rs = null;
@@ -224,4 +226,7 @@
                 conn = null;
                 }
   	}
+} else {
+	out.println("This page is only available to the owner");
+}
 %>
