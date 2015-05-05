@@ -17,7 +17,10 @@
 		!session.getAttribute("login_status").equals("success"))
 	{
 		%>
-		<p>No user logged in</p>
+		<p>No user logged in
+		   <a href="Login.jsp">Login here</a>
+		</p>
+		
 		
 		<% 
 	}

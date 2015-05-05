@@ -1,7 +1,16 @@
 <%@page import="java.sql.*" import="java.util.List"
 	import="java.util.ArrayList"%>
-<%@ include file="Header.jsp"%>
+<%@ include file="Home.jsp"%>
 <%
+if(request.getHeader("referer") == null ||
+	!request.getHeader("referer").equals("http://localhost:8080/cse135/Browse.jsp"))
+{
+	System.out.println(request.getHeader("referer"));
+	%>
+	<p>Invalid referrer</p>
+	<% 
+} else
+{
 	Connection conn = null;
 	ResultSet rs = null;
 	List<String> products = new ArrayList<String>();
@@ -105,4 +114,5 @@
 			conn = null;
 		}
 	}
+}
 %>
