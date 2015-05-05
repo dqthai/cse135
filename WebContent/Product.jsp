@@ -3,7 +3,8 @@
 	import="java.util.ArrayList"%>
 <%@include file="Home.jsp"%>
 <%
-	if (session.getAttribute("u_role") != null && session.getAttribute("u_role").equals("owner")) {
+	//if (session.getAttribute("u_role") != null && session.getAttribute("u_role").equals("owner")) {
+		if(1 ==1 ){
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -21,7 +22,7 @@
 							.prepareStatement("INSERT INTO Products (p_name, sku, price, category) VALUES (?, ?, ?, ?)");
 					pstmt.setString(1, request.getParameter("p_name"));
 					pstmt.setString(2, request.getParameter("sku"));
-					pstmt.setInt(3, Integer.parseInt(request
+					pstmt.setDouble(3, Double.parseDouble(request
 							.getParameter("price")));
 					pstmt.setInt(4, Integer.parseInt(request
 							.getParameter("category")));
@@ -35,6 +36,8 @@
 					out.println("Added product successfully");
 				} catch (SQLException e) {
 					out.println("Failed to add product");
+				} catch (NumberFormatException e){
+					out.println("Price must be a number");
 				}
 			}
 
@@ -61,6 +64,8 @@
 					out.println("Updated product successfully");
 				} catch (SQLException e) {
 					out.println("Failed to update product");
+				} catch (NumberFormatException e){
+					out.println("Price must be a number");
 				}
 			}
 
@@ -211,7 +216,7 @@
 						size="15" /></td>
 					<td><input value="<%=rs.getString("sku")%>" name="sku"
 						size="15" /></td>
-					<td><input value="<%=rs.getInt("price")%>" name="price"
+					<td><input value="<%=rs.getDouble("price")%>" name="price"
 						size="15" /></td>
 					<td><select name="category">
 							<%
