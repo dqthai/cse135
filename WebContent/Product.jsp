@@ -33,6 +33,7 @@
 							+ " category: "
 							+ request.getParameter("category"));
 					pstmt.executeUpdate();
+					pstmt.close();
 					out.println("Added product successfully");
 				} catch (SQLException e) {
 					out.println("Failed to add product");
@@ -61,6 +62,7 @@
 							+ " category: "
 							+ request.getParameter("category"));
 					pstmt.executeUpdate();
+					pstmt.close();
 					out.println("Updated product successfully");
 				} catch (SQLException e) {
 					out.println("Failed to update product");
@@ -76,6 +78,7 @@
 					pstmt.setInt(1, Integer.parseInt(request
 							.getParameter("id")));
 					pstmt.executeUpdate();
+					pstmt.close();
 					out.println("Deleted product successfully");
 				} catch (SQLException e) {
 					out.println("Failed to delete product");
@@ -251,7 +254,7 @@
 </div>
 
 <%
-	rs.close();
+			rs.close();
 			statement.close();
 			conn.close();
 		} catch (SQLException e) {
