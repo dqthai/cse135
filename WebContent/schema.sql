@@ -14,7 +14,7 @@ create table categories (
 
 create table products (
 	id serial primary key,
-	name text not null check (name<>''),
+	p_name text not null check (p_name<>''),
 	sku text unique not null check (sku<>''),
 	price decimal(10,4) not null,
 	category integer references categories(id)
