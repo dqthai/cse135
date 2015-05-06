@@ -45,6 +45,10 @@ Purchase Confirmed Bitch
 			</tr>
 			<%
 			}
+	        session.setAttribute("p_ids",null);
+	        session.setAttribute("prices",null);
+	        session.setAttribute("quantities",null);
+	        session.setAttribute("products",null);
 			} else { 
 				out.println("empty");
 			}

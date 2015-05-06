@@ -28,20 +28,7 @@ String summary = "";
 	if (session.getAttribute("u_name") != null){
 		user = (String)session.getAttribute("u_name");
 	}
-	//TEST CODE
-	user = "Chao";
 
-	
-	
-	
-//test code
-
-	p_ids.add(1);
-	p_ids.add(2);
-	quantities.add(9000);
-	quantities.add(420);
-	prices.add(3.50);
-	prices.add(.55);
 	
 	try {
 	Class.forName("org.postgresql.Driver"); // Registering Postgresql JDBC driver with the DriverManager
