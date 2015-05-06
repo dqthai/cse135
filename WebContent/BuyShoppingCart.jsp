@@ -68,7 +68,8 @@ System.out.println("query 1 success: " + user_id);
 	<%-- shopping cart table --%>
 	<table border=1>
 		<tr>
-			<td>Item</td>
+			<td>Item ID</td>
+			<td>Item Name</td>
 			<td>Quantity</td>
 			<td>Unit Price</td>
 			<td>Item Total</td>

@@ -100,15 +100,18 @@ if(session.getAttribute("u_role") != null && session.getAttribute("u_role").equa
         // Begin transaction
         conn.setAutoCommit(false);
         // Check if the category is empty
-        pstmt = conn.prepareStatement("SELECT * FROM categories WHERE id = ?");
+        pstmt = conn.prepareStatement("SELECT * FROM products WHERE category = ?");
         pstmt.setInt(1, Integer.parseInt(request.getParameter("id")));
+        System.out.println(request.getParameter("id"));
         rs = pstmt.executeQuery();
         if(rs.next()){
+            int count = 0;
         	// Iterate to end of result set
         	while(rs.next())
         	{
-        		
+        		count++;
         	}
+        	System.out.println(count);
         	%>
         	<p>Delete cannot occur. Products currently in this category</p>
         	<%
