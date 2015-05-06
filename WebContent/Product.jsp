@@ -3,7 +3,8 @@
 	import="java.util.ArrayList"%>
 <%@include file="Home.jsp"%>
 <%
-	if (session.getAttribute("u_role") != null && session.getAttribute("u_role").equals("owner")) {
+	if (session.getAttribute("u_role") != null
+			&& session.getAttribute("u_role").equals("owner")) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -16,6 +17,7 @@
 
 			if (action != null && action.equals("insert")) {
 				try {
+					conn.setAutoCommit(false);
 					System.out.println("insert");
 					pstmt = conn
 							.prepareStatement("INSERT INTO Products (p_name, sku, price, category) VALUES (?, ?, ?, ?)");
@@ -33,16 +35,19 @@
 							+ request.getParameter("category"));
 					pstmt.executeUpdate();
 					pstmt.close();
+					conn.commit();
+					conn.setAutoCommit(true);
 					out.println("Added product successfully");
 				} catch (SQLException e) {
 					out.println("Failed to add product");
-				} catch (NumberFormatException e){
+				} catch (NumberFormatException e) {
 					out.println("Price must be a number");
 				}
 			}
 
 			if (action != null && action.equals("update")) {
 				try {
+					conn.setAutoCommit(false);
 					System.out.println("update");
 					pstmt = conn
 							.prepareStatement("UPDATE Products SET p_name = ?, sku = ?, price = ?, category = ? WHERE id = ?");
@@ -62,22 +67,27 @@
 							+ request.getParameter("category"));
 					pstmt.executeUpdate();
 					pstmt.close();
+					conn.commit();
+					conn.setAutoCommit(true);
 					out.println("Updated product successfully");
 				} catch (SQLException e) {
 					out.println("Failed to update product");
-				} catch (NumberFormatException e){
+				} catch (NumberFormatException e) {
 					out.println("Price must be a number");
 				}
 			}
 
 			if (action != null && action.equals("delete")) {
 				try {
+					conn.setAutoCommit(false);
 					pstmt = conn
 							.prepareStatement("DELETE FROM Products WHERE id = ?");
 					pstmt.setInt(1, Integer.parseInt(request
 							.getParameter("id")));
 					pstmt.executeUpdate();
 					pstmt.close();
+					conn.commit();
+					conn.setAutoCommit(true);
 					out.println("Deleted product successfully");
 				} catch (SQLException e) {
 					out.println("Failed to delete product");
@@ -92,7 +102,7 @@
 	<h1>Products</h1>
 	<div id="categories" style="float: left;">
 		<h4>Categories</h4>
-		<ul>
+		<ul class="nav2">
 			<li><a href="Product.jsp?categories=allproducts">All
 					Products</a></li>
 			<%
@@ -102,7 +112,7 @@
 			<li><a href="Product.jsp?categories=<%=category%>"><%=category%></a></li>
 			<%
 				}
-			rs.close();
+						rs.close();
 			%>
 		</ul>
 	</div>
@@ -254,7 +264,7 @@
 </div>
 
 <%
-			rs.close();
+	rs.close();
 			statement.close();
 			conn.close();
 		} catch (SQLException e) {
