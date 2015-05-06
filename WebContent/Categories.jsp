@@ -72,9 +72,6 @@ if(session.getAttribute("u_role") != null && session.getAttribute("u_role").equa
 			//print an error
 			errortext = "UPDATE FAILED: NAME FIELD EMPTY";
 		}
-		else if(re.next()){
-		errortext = "UPDATE FAILED: NAME ALREADY EXISTS";
-		}
 		else{
         // Begin transaction
 		conn.setAutoCommit(false);
