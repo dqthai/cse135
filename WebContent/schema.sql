@@ -22,7 +22,9 @@ create table products (
 
 create table purchases (
 	id serial primary key,
+	p_id int references products(id),
 	u_id int references users(u_id),
+	quantity int not null,
 	price decimal (10,4) not null,
 	summary text not null check (summary<>'')
 );
