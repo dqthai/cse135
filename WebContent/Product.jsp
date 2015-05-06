@@ -48,7 +48,7 @@
 							.prepareStatement("UPDATE Products SET p_name = ?, sku = ?, price = ?, category = ? WHERE id = ?");
 					pstmt.setString(1, request.getParameter("p_name"));
 					pstmt.setString(2, request.getParameter("sku"));
-					pstmt.setInt(3, Integer.parseInt(request
+					pstmt.setDouble(3, Double.parseDouble(request
 							.getParameter("price")));
 					pstmt.setInt(4, Integer.parseInt(request
 							.getParameter("category")));

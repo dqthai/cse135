@@ -42,6 +42,7 @@
 			<p>Hello, <%=u_name %></p>
 			
 			<!-- Customer pages -->
+			<li><a href="Home.jsp">Home</a></li>
 			<li><a href="BuyShoppingCart.jsp">Shopping Cart</a></li>
 			<li><a href="Browse.jsp">Product Browsing</a></li>
 			<%

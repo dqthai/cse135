@@ -18,20 +18,22 @@
 			List<String> products = new ArrayList<String>();
 			if (session.getAttribute("products") != null)
 				products = (ArrayList<String>) session.getAttribute("products");
+			
 			List<Integer> quantities = new ArrayList<Integer>();
 			if (session.getAttribute("quantities") != null)
-				quantities = (ArrayList<Integer>) session
-						.getAttribute("quantities");
-			List<Integer> prices = new ArrayList<Integer>();
+				quantities = (ArrayList<Integer>) session.getAttribute("quantities");
+			
+			List<Double> prices = new ArrayList<Double>();
 			if (session.getAttribute("prices") != null)
-				prices = (ArrayList<Integer>) session.getAttribute("prices");
+				prices = (ArrayList<Double>) session.getAttribute("prices");
+			
 			List<Integer> p_ids = new ArrayList<Integer>();
 			if (session.getAttribute("p_ids") != null)
-				prices = (ArrayList<Integer>) session.getAttribute("p_ids");
+				p_ids = (ArrayList<Integer>) session.getAttribute("p_ids");
+			
 			products.add(request.getParameter("p_name"));
-			quantities.add(Integer.parseInt(request
-					.getParameter("quantity")));
-			prices.add(Integer.parseInt(request.getParameter("price")));
+			quantities.add(Integer.parseInt(request.getParameter("quantity")));
+			prices.add(Double.parseDouble(request.getParameter("price")));
 			p_ids.add(Integer.parseInt(request.getParameter("p_id")));
 			session.setAttribute("products", products);
 			session.setAttribute("quantities", quantities);
@@ -139,7 +141,7 @@
 			<td><%=rs.getInt("id")%></td>
 			<td><a href="ProductOrder.jsp?products_order=<%= product_name%>"><%= product_name%></a></td>
 			<td><%=rs.getString("sku")%></td>
-			<td><%=rs.getInt("price")%></td>
+			<td><%=rs.getDouble("price")%></td>
 			<td><%=rs.getString("name")%></td>
 			</tr>
 			<%
