@@ -67,13 +67,13 @@ if (session.getAttribute("login_status") != null &&
 	<div id="categories" style="float: left;">
 		<h2>Categories</h2>
 		<ul>
-			<li><a href="Product.jsp?categories=allproducts">All
+			<li><a href="Browse.jsp?categories=allproducts">All
 					Products</a></li>
 			<%
 				while (rs.next()) {
 						String category = rs.getString("name");
 			%>
-			<li><a href="Product.jsp?categories=<%=category%>"><%=category%></a></li>
+			<li><a href="Browse.jsp?categories=<%=category%>"><%=category%></a></li>
 			<%
 				}
 				rs.close();
