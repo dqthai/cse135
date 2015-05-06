@@ -16,9 +16,9 @@
 			String action = request.getParameter("action");
 
 			if (action != null && action.equals("insert")) {
-				if (request.getParameter("p_name").equals("")
-						&& request.getParameter("sku").equals("")
-						&& request.getParameter("price").equals("")) {
+				if (!request.getParameter("p_name").equals("")
+						&& !request.getParameter("sku").equals("")
+						&& !request.getParameter("price").equals("")) {
 					try {
 						conn.setAutoCommit(false);
 						System.out.println("insert");
