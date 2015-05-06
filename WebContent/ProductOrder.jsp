@@ -56,7 +56,7 @@ if(request.getHeader("referer") == null ||
 			<input type="hidden" value="<%=price%>" name="price" />
 			<input type="hidden" value="<%=p_name%>" name="p_name" /> 
 			<label>Quantity</label>
-			<input type="number" value="" name="quantity" /><br> 
+			<input type="number" value="1" min="1" name="quantity" /><br> 
 			<input type="hidden" name="action" value="add" /> 
 			<input type="submit" value="Add to cart" />
 		</form>

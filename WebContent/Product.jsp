@@ -16,64 +16,82 @@
 			String action = request.getParameter("action");
 
 			if (action != null && action.equals("insert")) {
-				try {
-					conn.setAutoCommit(false);
-					System.out.println("insert");
-					pstmt = conn
-							.prepareStatement("INSERT INTO Products (p_name, sku, price, category) VALUES (?, ?, ?, ?)");
-					pstmt.setString(1, request.getParameter("p_name"));
-					pstmt.setString(2, request.getParameter("sku"));
-					pstmt.setDouble(3, Double.parseDouble(request
-							.getParameter("price")));
-					pstmt.setInt(4, Integer.parseInt(request
-							.getParameter("category")));
-					System.out.println("name: "
-							+ request.getParameter("p_name") + " sku: "
-							+ request.getParameter("sku") + " price: "
-							+ request.getParameter("price")
-							+ " category: "
-							+ request.getParameter("category"));
-					pstmt.executeUpdate();
-					pstmt.close();
-					conn.commit();
-					conn.setAutoCommit(true);
-					out.println("Added product successfully");
-				} catch (SQLException e) {
-					out.println("Failed to add product");
-				} catch (NumberFormatException e) {
-					out.println("Price must be a number");
+				if (request.getParameter("p_name").equals("")
+						&& request.getParameter("sku").equals("")
+						&& request.getParameter("price").equals("")) {
+					try {
+						conn.setAutoCommit(false);
+						System.out.println("insert");
+						pstmt = conn
+								.prepareStatement("INSERT INTO Products (p_name, sku, price, category) VALUES (?, ?, ?, ?)");
+						pstmt.setString(1,
+								request.getParameter("p_name"));
+						pstmt.setString(2, request.getParameter("sku"));
+						pstmt.setDouble(3, Double.parseDouble(request
+								.getParameter("price")));
+						pstmt.setInt(4, Integer.parseInt(request
+								.getParameter("category")));
+						System.out.println("name: "
+								+ request.getParameter("p_name")
+								+ " sku: "
+								+ request.getParameter("sku")
+								+ " price: "
+								+ request.getParameter("price")
+								+ " category: "
+								+ request.getParameter("category"));
+						pstmt.executeUpdate();
+						pstmt.close();
+						conn.commit();
+						conn.setAutoCommit(true);
+						out.println("Added product successfully");
+					} catch (SQLException e) {
+						out.println("Failed to add product");
+					} catch (NumberFormatException e) {
+						out.println("Price must be a number");
+					}
+				} else {
+					out.println("Missing Fields");
 				}
 			}
 
 			if (action != null && action.equals("update")) {
-				try {
-					conn.setAutoCommit(false);
-					System.out.println("update");
-					pstmt = conn
-							.prepareStatement("UPDATE Products SET p_name = ?, sku = ?, price = ?, category = ? WHERE id = ?");
-					pstmt.setString(1, request.getParameter("p_name"));
-					pstmt.setString(2, request.getParameter("sku"));
-					pstmt.setDouble(3, Double.parseDouble(request
-							.getParameter("price")));
-					pstmt.setInt(4, Integer.parseInt(request
-							.getParameter("category")));
-					pstmt.setInt(5, Integer.parseInt(request
-							.getParameter("id")));
-					System.out.println("name: "
-							+ request.getParameter("name") + " sku: "
-							+ request.getParameter("sku") + " price: "
-							+ request.getParameter("price")
-							+ " category: "
-							+ request.getParameter("category"));
-					pstmt.executeUpdate();
-					pstmt.close();
-					conn.commit();
-					conn.setAutoCommit(true);
-					out.println("Updated product successfully");
-				} catch (SQLException e) {
-					out.println("Failed to update product");
-				} catch (NumberFormatException e) {
-					out.println("Price must be a number");
+				if (request.getParameter("p_name").equals("")
+						&& request.getParameter("sku").equals("")
+						&& request.getParameter("price").equals("")) {
+					try {
+						conn.setAutoCommit(false);
+						System.out.println("update");
+						pstmt = conn
+								.prepareStatement("UPDATE Products SET p_name = ?, sku = ?, price = ?, category = ? WHERE id = ?");
+						pstmt.setString(1,
+								request.getParameter("p_name"));
+						pstmt.setString(2, request.getParameter("sku"));
+						pstmt.setDouble(3, Double.parseDouble(request
+								.getParameter("price")));
+						pstmt.setInt(4, Integer.parseInt(request
+								.getParameter("category")));
+						pstmt.setInt(5, Integer.parseInt(request
+								.getParameter("id")));
+						System.out.println("name: "
+								+ request.getParameter("name")
+								+ " sku: "
+								+ request.getParameter("sku")
+								+ " price: "
+								+ request.getParameter("price")
+								+ " category: "
+								+ request.getParameter("category"));
+						pstmt.executeUpdate();
+						pstmt.close();
+						conn.commit();
+						conn.setAutoCommit(true);
+						out.println("Updated product successfully");
+					} catch (SQLException e) {
+						out.println("Failed to update product");
+					} catch (NumberFormatException e) {
+						out.println("Price must be a number");
+					}
+				} else {
+					out.println("Missing Fields");
 				}
 			}
 
