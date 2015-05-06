@@ -3,7 +3,7 @@
 <%@ include file="Home.jsp"%>
 <% 
 if (session.getAttribute("login_status") != null &&
-	!session.getAttribute("login_status").equals("success"))
+	session.getAttribute("login_status").equals("success"))
 {
 //initialize jsp objects
 	Connection conn = null;

@@ -56,6 +56,11 @@ Purchase Confirmed
 				out.println("empty");
 			}
 }
+else {
+	%>
+	<p>Invalid referrer</p>
+	<%
+}
 			%>
 
 </table>

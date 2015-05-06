@@ -35,17 +35,18 @@
     String action = request.getParameter("action");
     if (action != null && action.equals("signup"))
     {
-    	if (request.getParameter("u_name") == null
-				|| request.getParameter("u_role") == null
-				|| request.getParameter("u_age") == null
-				|| request.getParameter("u_state") == null
-    			|| request.getParameter("u_name").equals("")
-				|| request.getParameter("u_role").equals("")
-				|| request.getParameter("u_age").equals("")
-				|| request.getParameter("u_state").equals("")) 
+    	if (request.getParameter("name") == null
+				|| request.getParameter("role") == null
+				|| request.getParameter("age") == null
+				|| request.getParameter("state") == null
+    			|| request.getParameter("name").equals("")
+				|| request.getParameter("role").equals("")
+				|| request.getParameter("age").equals("")
+				|| request.getParameter("state").equals("")) 
     	{
     		%>
-    		<p>Invalid input</p>
+    		<p>You have failed to sign up.
+    		Invalid input</p>
     		<%
     	} else {
     		
@@ -166,7 +167,8 @@
     catch (NumberFormatException e){
     	System.out.println("NumberFormatException caught");
     	%>
-    	<p>Age: not a number</p>
+    	<p>You have failed to sign up.
+    	Age: not a number</p>
     	<% 
     }
     finally {

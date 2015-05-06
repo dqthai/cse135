@@ -16,6 +16,15 @@
 		session.getAttribute("login_status") == null ||
 		!session.getAttribute("login_status").equals("success"))
 	{
+		if (session.getAttribute("u_name")!= null &&
+			session.getAttribute("login_status") != null &&
+			session.getAttribute("login_status").equals("failure"))
+		{
+			%>
+			<p>The provided name <%=session.getAttribute("u_name") %> is not found</p>
+			<%
+			
+		}
 		%>
 		<p>No user logged in
 		   <a href="Login.jsp">Login here</a>
@@ -32,7 +41,6 @@
 		if (session.getAttribute("login_status") != null &&
 			session.getAttribute("login_status").equals("success"))
 		*/
-		{
 		
 			
 			String u_role = new String((String)session.getAttribute("u_role"));
@@ -55,7 +63,7 @@
 			}
 			
 		}	
-	}
+	
 
 	%>
 
