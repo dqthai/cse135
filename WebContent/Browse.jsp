@@ -1,7 +1,23 @@
 <%@page import="java.sql.*" import="java.util.List"
 	import="java.util.ArrayList"%>
-<%@ include file="Home.jsp"%>
-<%
+	<%
+	String u_name = new String((String)session.getAttribute("u_name"));
+	if(u_name != null)
+	{
+		/* Possible gratuitous check
+		if (session.getAttribute("login_status") != null &&
+			session.getAttribute("login_status").equals("success"))
+		*/
+		
+			
+			String u_role = new String((String)session.getAttribute("u_role"));
+			System.out.println("session user is " + 
+								u_name + " with role as " + u_role);
+			%>
+			<p>Hello, <%=u_name %></p>
+			
+<%   }
+
 if (session.getAttribute("login_status") != null &&
 	session.getAttribute("login_status").equals("success"))
 {

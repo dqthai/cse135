@@ -99,14 +99,32 @@ if(session.getAttribute("u_role") != null && session.getAttribute("u_role").equa
 
         // Begin transaction
         conn.setAutoCommit(false);
-        // Create the prepared statement and use it to
-        // DELETE categories FROM the table.
-        pstmt = conn.prepareStatement("DELETE FROM categories WHERE id = ?");
+        // Check if the category is empty
+        pstmt = conn.prepareStatement("SELECT * FROM categories WHERE id = ?");
         pstmt.setInt(1, Integer.parseInt(request.getParameter("id")));
-        int rowCount = pstmt.executeUpdate();
-        // Commit transaction
-        conn.commit();
-        conn.setAutoCommit(true);
+        rs = pstmt.executeQuery();
+        if(rs.next()){
+        	// Iterate to end of result set
+        	while(rs.next())
+        	{
+        		
+        	}
+        	%>
+        	<p>Delete cannot occur. Products currently in this category</p>
+        	<%
+        }
+        else
+        {
+        	        		
+	        // Create the prepared statement and use it to
+	        // DELETE categories FROM the table.
+	        pstmt = conn.prepareStatement("DELETE FROM categories WHERE id = ?");
+	        pstmt.setInt(1, Integer.parseInt(request.getParameter("id")));
+	        int rowCount = pstmt.executeUpdate();
+	        // Commit transaction
+	        conn.commit();
+	        conn.setAutoCommit(true);
+        }
 	}
 %>
 <%-- -------- Result Set Code ---- --%>
@@ -200,7 +218,9 @@ if(session.getAttribute("u_role") != null && session.getAttribute("u_role").equa
 
                 // Wrap the SQL exception in a runtime exception to propagate
                 // it upwards
-                throw new RuntimeException(e);
+                %>
+                <p>Data modification failure</p>
+                <%
     } 
     finally {
     	// Release resources in a finally block in reverse-order of
