@@ -42,7 +42,6 @@ if(session.getAttribute("u_role") != null && session.getAttribute("u_role").equa
 			errortext = "INSERT FAILED: NAME FIELD EMPTY";
 		}
 		else if(re.next()){
-			
 			errortext = "INSERT FAILED: NAME ALREADY EXISTS";
 		}
 		else{

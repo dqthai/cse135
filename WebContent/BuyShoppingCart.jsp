@@ -1,6 +1,6 @@
 
-<%@ page import="java.util.*,java.sql.*" %>
-<%@ include file="Home.jsp" %>
+<%@ page import="java.util.*,java.sql.*"%>
+<%@ include file="Home.jsp"%>
 <% 
 //initialize jsp objects
 	Connection conn = null;
@@ -63,14 +63,14 @@ System.out.println("query 1 success: " + user_id);
 </head>
 <body>
 	<%-- shopping cart table --%>
-<table border=1>
-	<tr>
-	<td>Item</td>
-	<td>Quantity</td>
-	<td>Unit Price</td>
-	<td>Item Total</td>
-	</tr>
-	<%
+	<table border=1>
+		<tr>
+			<td>Item</td>
+			<td>Quantity</td>
+			<td>Unit Price</td>
+			<td>Item Total</td>
+		</tr>
+		<%
 		int i_pid = 0;
 		String i_product = "";
 		int i_quantity = 0; //i_ prefix means iteration
@@ -93,67 +93,71 @@ System.out.println("query 1 success: " + user_id);
 				i_quantityprice = i_quantity * i_price;
 				i_totalprice+=i_quantityprice;
 	%>
-			<tr>
-				<td><%=i_pid%></td>
-				<td><%=i_product%></td>
-				<td><%=i_quantity%></td>
-				<td><%=String.format( "%.2f", i_price)%></td>
-				<td><%=String.format( "%.2f", i_quantityprice)%></td>
-			</tr>
-			<%
+		<tr>
+			<td><%=i_pid%></td>
+			<td><%=i_product%></td>
+			<td><%=i_quantity%></td>
+			<td><%=String.format( "%.2f", i_price)%></td>
+			<td><%=String.format( "%.2f", i_quantityprice)%></td>
+		</tr>
+		<%
 			}
 			} else { 
-				%><tr><th>Empty</th></tr><%
+				%><tr>
+			<th>Empty</th>
+		</tr>
+		<%
 			}
 			%>
-</table>
-<p>
-Total: $ <%=String.format( "%.2f",i_totalprice )%>
-</p>
-<p>Credit Card Number</p>
-<form action="BuyShoppingCart.jsp" method="POST">
-<input type="hidden" name="action" value="buy"/>
-<input value="1234" name="creditcardnumber" size="20" />
-<%-- Button --%>
-<input type="submit" value="Purchase"/>
-</form>
+	</table>
+	<p>
+		Total: $
+		<%=String.format( "%.2f",i_totalprice )%>
+	</p>
+	<p>Credit Card Number</p>
+	<form action="BuyShoppingCart.jsp" method="POST">
+		<input type="hidden" name="action" value="buy" /> <input value=""
+			name="creditcardnumber" size="20" />
+		<%-- Button --%>
+		<input type="submit" value="Purchase" />
+	</form>
 
 </body>
 </html>
 <%-- -------- Buy Button Code ------- --%>
 <%
-	if (action != null && action.equals("buy")) {
 
+
+	if (action != null && action.equals("buy")) {
+		String card = request.getParameter("creditcardnumber");
+		if(p_ids.isEmpty()){
+			System.out.println("empty");
+		}
+		else if(card.isEmpty() || card == null){
+			System.out.println("nocard");
+		}
+		else{
         // Begin transaction
         conn.setAutoCommit(false);
-		String card = request.getParameter("creditcardnumber");
         session.setAttribute("creditcard", card);
         System.out.println("card number stored in session: " + card);
+        pstmt = conn.prepareStatement("INSERT INTO purchases(u_id,price,summary)"+ 
+        		" VALUES(?, ?, ?)");
+        pstmt.setInt(1, user_id);
         for(int i = 0; i < p_ids.size(); i++){
-        	pstmt = conn.prepareStatement("INSERT INTO purchases(u_id,p_id,quantity,price,summary)"+ 
-        		" VALUES(?, ?, ?, ?, ?)");
-        	pstmt.setInt(1, user_id);
         	i_pid = p_ids.get(i);
-        	pstmt.setInt(2, i_pid);
         	i_quantity = quantities.get(i);
-        	pstmt.setInt(3, i_quantity);
         	i_price = prices.get(i);
-        	i_quantityprice = i_quantity * i_price;
-        	pstmt.setDouble(4, i_quantityprice);
-        	pstmt.setString(5, "summary");
-        	pstmt.executeUpdate();
+        	summary += "[" + i_pid + ";" + i_quantity + ";" + i_price + "]" ;
         }
+        pstmt.setDouble(2, i_totalprice);
+        pstmt.setString(3, summary);
+        pstmt.executeUpdate();
         conn.commit();
         conn.setAutoCommit(true);
         response.sendRedirect("Confirmation.jsp");
+		}
 	}
-%>
-
-
-
-
-
-<% 
 } catch(SQLException e) {
 	throw new RuntimeException(e);
 }
