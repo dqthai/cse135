@@ -28,7 +28,7 @@
 <title>Payment Confirmation</title>
 </head>
 <body>
-Purchase Confirmed Bitch
+Purchase Confirmed
 <table>
 <tr>
 <th>your stuff</th>
