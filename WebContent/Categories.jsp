@@ -41,6 +41,9 @@ if(session.getAttribute("u_role") != null && session.getAttribute("u_role").equa
 			//print an error
 			errortext = "INSERT FAILED: NAME FIELD EMPTY";
 		}
+		else if(request.getParameter("description") == null || request.getParameter("description").isEmpty()){
+			errortext = "INSERT FAILED: DESCRIPTION FIELD EMPTY";
+		}
 		else if(re.next()){
 			errortext = "INSERT FAILED: NAME ALREADY EXISTS";
 		}
@@ -61,8 +64,7 @@ if(session.getAttribute("u_role") != null && session.getAttribute("u_role").equa
 <%-- -------- UPDATE Code -------- --%>
 <%
 	// Check if an update is requested
-	if (action != null && action.equals("update")) {
-		
+	if (action != null && action.equals("update")) {	
 	pstmt = conn.prepareStatement("SELECT 1 FROM categories " + 
 				"WHERE name = ?");
 	pstmt.setString(1, request.getParameter("name"));
