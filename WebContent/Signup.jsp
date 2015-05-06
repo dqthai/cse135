@@ -35,6 +35,20 @@
     String action = request.getParameter("action");
     if (action != null && action.equals("signup"))
     {
+    	if (request.getParameter("u_name") == null
+				|| request.getParameter("u_role") == null
+				|| request.getParameter("u_age") == null
+				|| request.getParameter("u_state") == null
+    			|| request.getParameter("u_name").equals("")
+				|| request.getParameter("u_role").equals("")
+				|| request.getParameter("u_age").equals("")
+				|| request.getParameter("u_state").equals("")) 
+    	{
+    		%>
+    		<p>Invalid input</p>
+    		<%
+    	} else {
+    		
     	conn.setAutoCommit(false);
     	pstmt = conn.prepareStatement(
     			"INSERT INTO users (u_name, u_role, u_age, u_state)" +
@@ -51,9 +65,9 @@
     	// Redirect to signup success page
     	redirect = "SignUpSuccess.html";
     	response.sendRedirect(redirect);
-
+    	}
     }
-    %>
+   %>
 
 	<h1>Signup</h1>
 	<form action="Signup.jsp" method="post">
@@ -148,6 +162,12 @@
     	System.out.println("SQLException caught");
     	redirect = "SignupFailure.html";
     	response.sendRedirect(redirect);
+    }
+    catch (NumberFormatException e){
+    	System.out.println("NumberFormatException caught");
+    	%>
+    	<p>Age: not a number</p>
+    	<% 
     }
     finally {
 	    if (rs != null) {

@@ -2,6 +2,9 @@
 <%@ page import="java.util.*,java.sql.*"%>
 <%@ include file="Home.jsp"%>
 <% 
+if (session.getAttribute("login_status") != null &&
+	!session.getAttribute("login_status").equals("success"))
+{
 //initialize jsp objects
 	Connection conn = null;
 	ResultSet rs = null;
@@ -160,5 +163,6 @@ System.out.println("query 1 success: " + user_id);
 	}
 } catch(SQLException e) {
 	throw new RuntimeException(e);
+}
 }
 %>

@@ -2,6 +2,9 @@
 	import="java.util.ArrayList"%>
 <%@ include file="Home.jsp"%>
 <%
+if (session.getAttribute("login_status") != null &&
+	!session.getAttribute("login_status").equals("success"))
+{
 	Connection conn = null;
 	ResultSet rs = null;
 	try {
@@ -173,4 +176,5 @@
 			conn = null;
 		}
 	}
+}
 %>

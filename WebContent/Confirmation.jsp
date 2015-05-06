@@ -1,7 +1,10 @@
 <%@ page import="java.util.*,java.sql.*" %>
+<%@ include file="Home.jsp" %>
 
 <%
-	
+if(request.getHeader("referer") != null &&
+request.getHeader("referer").equals("http://localhost:8080/cse135/BuyShoppingCart.jsp"))
+{
 	List<String> products = new ArrayList<String>();
 	List<Integer> quantities = new ArrayList<Integer>();
 	
@@ -52,7 +55,7 @@ Purchase Confirmed
 			} else { 
 				out.println("empty");
 			}
-			
+}
 			%>
 
 </table>
