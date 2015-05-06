@@ -91,7 +91,7 @@
 <div>
 	<h1>Products</h1>
 	<div id="categories" style="float: left;">
-		<h2>Categories</h2>
+		<h4>Categories</h4>
 		<ul>
 			<li><a href="Product.jsp?categories=allproducts">All
 					Products</a></li>
@@ -102,6 +102,7 @@
 			<li><a href="Product.jsp?categories=<%=category%>"><%=category%></a></li>
 			<%
 				}
+			rs.close();
 			%>
 		</ul>
 	</div>
